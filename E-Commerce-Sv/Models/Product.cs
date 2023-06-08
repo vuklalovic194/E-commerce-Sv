@@ -10,9 +10,9 @@ namespace E_Commerce_Sv.Models
 		[Range(3, 50)]
 		public string? Name { get; set; }
 		[Required]
+		public int Price { get; set; }
 		[StringLength(50)]
 		public string? Description { get; set; }
-		[Required]
 		public string? Category { get; set; }
 		public int CategoryId { get; set; }
 	}

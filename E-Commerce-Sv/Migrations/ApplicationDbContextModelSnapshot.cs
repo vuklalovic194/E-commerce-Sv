@@ -30,14 +30,12 @@ namespace E_Commerce_Sv.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -45,9 +43,32 @@ namespace E_Commerce_Sv.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "Desktop",
+                            CategoryId = 1,
+                            Description = "graficka komponenta",
+                            Name = "AMD Radeon RX 580",
+                            Price = 150
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "Desktop",
+                            CategoryId = 1,
+                            Description = "graficka komponenta",
+                            Name = "NVIDIA GEFORCE GTX",
+                            Price = 250
+                        });
                 });
 #pragma warning restore 612, 618
         }

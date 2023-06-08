@@ -1,1 +1,24 @@
-﻿<h1>PRODUCTS</h1>
+﻿@model List<Product>
+
+<h1>PRODUCTS</h1>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tbody>
+			@foreach (var product in Model)
+			{
+			<tr>
+				<td>
+						@product.Name
+				</td>
+				<td>
+						@product.Price
+				</td>
+			</tr>
+			}
+		</tbody>
+	</thead>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">
+	Create Product
+</a>
