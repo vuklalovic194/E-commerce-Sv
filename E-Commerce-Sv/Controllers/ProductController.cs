@@ -22,6 +22,7 @@ namespace E_Commerce_Sv.Controllers
 		public IActionResult Create()
 		{
 			return View();
+
 		}
 
 		[HttpPost]
