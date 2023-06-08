@@ -1,0 +1,18 @@
+﻿@model Product
+<h1>Create Product</h1>
+
+<form method="post">
+	<div class="mb-3 row p-1">
+		<label class="p-0">Product Name</label>
+		<input asp-for="Name" type="text" class="form-control" />
+	</div>
+	<div class="mb-3 row p-1">
+		<label class="p-0">Product Price</label>
+		<input asp-for="Price" class="form-control" />
+	</div>
+
+	<button type="submit" class="btn btn-primary form-control">Create</button>
+	<a asp-action="Index" class="btn btn-primary">
+		Back To Products
+	</a>
+</form>
