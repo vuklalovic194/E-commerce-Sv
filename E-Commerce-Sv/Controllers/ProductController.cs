@@ -37,9 +37,26 @@ namespace E_Commerce_Sv.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public IActionResult Edit()
+		public IActionResult Edit(int? id)
 		{
-			return View();
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+			Product productFromDb = _db.Products.FirstOrDefault(x => x.Id == id);
+			if (productFromDb == null)
+			{
+				NotFound();
+			}
+			return View(productFromDb);
+		}
+
+		[HttpPost]
+		public IActionResult Edit(Product product)
+		{
+			_db.Products.Update(product);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
 		}
 
 		public IActionResult Delete()

@@ -13,6 +13,20 @@
 				<td>
 						@product.Price
 				</td>
+				<td>
+					<div>
+						<a asp-controller="" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary mx-2">
+							Edit
+						</a>
+					</div>
+				</td>
+				<td>
+					<div>
+						<a asp-controller="" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-primary mx-2">
+							Delete
+						</a>
+					</div>
+				</td>
 			</tr>
 			}
 		</tbody>
@@ -22,3 +36,5 @@
 <a asp-action="Create" class="btn btn-primary">
 	Create Product
 </a>
+
+
