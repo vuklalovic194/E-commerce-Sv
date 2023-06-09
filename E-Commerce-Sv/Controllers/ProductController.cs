@@ -43,7 +43,7 @@ namespace E_Commerce_Sv.Controllers
 			{
 				return NotFound();
 			}
-			Product productFromDb = _db.Products.FirstOrDefault(x => x.Id == id);
+			Product? productFromDb = _db.Products.FirstOrDefault(x => x.Id == id);
 			if (productFromDb == null)
 			{
 				NotFound();
@@ -59,9 +59,27 @@ namespace E_Commerce_Sv.Controllers
 			return RedirectToAction("Index");
 		}
 
-		public IActionResult Delete()
+		public IActionResult Delete(int? id)
 		{
-			return View();
+			if (id == null || id == 0)
+			{
+				return NotFound();
+			}
+
+			Product? productFromDb = _db.Products.FirstOrDefault(x => x.Id == id);
+			if(productFromDb == null)
+			{
+				NotFound();
+			}
+			return View(productFromDb);
+		}
+
+		[HttpPost]
+		public IActionResult Delete(Product product)
+		{
+			_db.Products.Remove(product);
+			_db.SaveChanges();
+			return RedirectToAction("Index");
 		}
 	}
 }

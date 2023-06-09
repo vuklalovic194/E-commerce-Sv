@@ -11,18 +11,18 @@
 						@product.Name
 				</td>
 				<td>
-						@product.Price
+						@product.Price Euros
 				</td>
 				<td>
 					<div>
-						<a asp-controller="" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary mx-2">
+						<a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary mx-2">
 							Edit
 						</a>
 					</div>
 				</td>
 				<td>
 					<div>
-						<a asp-controller="" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-primary mx-2">
+						<a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-primary mx-2">
 							Delete
 						</a>
 					</div>
