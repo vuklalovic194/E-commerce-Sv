@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_Commerce_Sv.Models
 {
@@ -13,7 +14,8 @@ namespace E_Commerce_Sv.Models
 		public int Price { get; set; }
 		[StringLength(50)]
 		public string? Description { get; set; }
-		public string? Category { get; set; }
+		[ForeignKey("CategoryId")]
+		public Category? Category { get; set; }
 		public int CategoryId { get; set; }
 	}
 }
