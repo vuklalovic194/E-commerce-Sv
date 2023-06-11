@@ -27,9 +27,13 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 		[HttpPost]
 		public IActionResult Create(Category category)
 		{
-			_categoryRepo.Add(category);
-			_categoryRepo.Save();
-			return RedirectToAction("Index");
+			if (ModelState.IsValid)
+			{
+				_categoryRepo.Add(category);
+				_categoryRepo.Save();
+				return RedirectToAction("Index");
+			}
+			return View();
 		}
 
 		public IActionResult Edit(int? id) 
@@ -49,9 +53,13 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 		[HttpPost]
 		public IActionResult Edit(Category category) 
 		{
-			_categoryRepo.Update(category);
-			_categoryRepo.Save();
-			return RedirectToAction("Index");
+			if (ModelState.IsValid)
+			{
+				_categoryRepo.Update(category);
+				_categoryRepo.Save();
+				return RedirectToAction("Index");
+			}
+			return View();
 		}
 
 		public IActionResult Delete(int? id) 

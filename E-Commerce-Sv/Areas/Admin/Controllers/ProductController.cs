@@ -29,9 +29,13 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Product product)
         {
-            _productRepo.Add(product);
-            _productRepo.Save();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+				_productRepo.Add(product);
+				_productRepo.Save();
+				return RedirectToAction("Index");
+			}
+            return View();
         }
 
         public IActionResult Read()
@@ -56,9 +60,13 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Product product)
         {
-            _productRepo.Update(product);
-            _productRepo.Save();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+				_productRepo.Update(product);
+				_productRepo.Save();
+				return RedirectToAction("Index");
+			}
+            return View();
         }
 
         public IActionResult Delete(int? id)
@@ -79,9 +87,9 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(Product product)
         {
-            _productRepo.Remove(product);
-            _productRepo.Save();
-            return RedirectToAction("Index");
+			_productRepo.Remove(product);
+			_productRepo.Save();
+			return RedirectToAction("Index");
         }
     }
 }

@@ -8,11 +8,12 @@ namespace E_Commerce_Sv.Models
 		[Key]
 		public int Id { get; set; }
 		[Required]
-		[Range(3, 50)]
+		[StringLength(50, MinimumLength = 3, ErrorMessage = "Name must consider from 3 - 50 characters")]
 		public string? Name { get; set; }
 		[Required]
 		public int Price { get; set; }
-		[StringLength(50)]
+		[Required]
+		[StringLength(50, MinimumLength = 3, ErrorMessage = "Name must consider from 3 - 50 characters")]
 		public string? Description { get; set; }
 		[ForeignKey("CategoryId")]
 		public Category? Category { get; set; }
