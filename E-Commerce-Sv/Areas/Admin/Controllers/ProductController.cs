@@ -1,11 +1,14 @@
 ﻿using E_Commerce_Sv.Data;
 using E_Commerce_Sv.Models;
 using E_Commerce_Sv.Repository.IRepository;
+using E_Commerce_Sv.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Commerce_Sv.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IProductRepository _productRepo;
