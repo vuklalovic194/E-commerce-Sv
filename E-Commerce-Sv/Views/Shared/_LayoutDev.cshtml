@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - E_Commerce_Sv</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/E_Commerce_Sv.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar__container">
+            <div class="navbar__items__container">
+                <div class="navbar__items">
+                    <div class="navbar__logo">
+                        <img src="~/assets/Logo.svg" alt="logo" />
+                    </div>
+                    <div class="navbar__search">
+                        <input type="text" accept="string" alt="search" placeholder="Search something" />
+                        <img src="~/assets/search.svg" />
+                    </div>
+                    <div class="navbar__links">
+                        <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Shop</a>
+                        <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Blog</a>
+                        <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">About us</a>
+                    </div>
+                </div>
+                <div class="navbar__buttons">
+                    <div class="navbar__button">
+                        <img src="~/assets/heart.svg" />
+                        <a class="button__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Love</a>
+                    </div>
+                    <div class="navbar__button">
+                        <img src="~/assets/add shopping-bag.svg" />
+                        <a class="button__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Cart</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
