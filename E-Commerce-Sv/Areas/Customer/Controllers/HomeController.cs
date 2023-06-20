@@ -1,4 +1,5 @@
 ﻿using E_Commerce_Sv.Models;
+using E_Commerce_Sv.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,19 +8,19 @@ namespace E_Commerce_Sv.Areas.Customer.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<HomeController> _logger;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
-            _webHostEnvironment = webHostEnvironment;
+            _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-
-            return View();
+            IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll().ToList();
+            return View(productList);
         }
 
         public IActionResult Privacy()

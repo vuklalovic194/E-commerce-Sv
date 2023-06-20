@@ -1,9 +1,21 @@
 ﻿@model List<Product>
 
 <h1>PRODUCTS</h1>
+<div>
+	<label class="col-10"> Name of the Product</label>
+</div>
+<div>
+	<label class="col-11"> Price of the Product</label>
+</div>
+<div>
+	<label class="col-12"> Description of the Product</label>
+</div>
+<div>
+	<label class="col-13"> Category of the Product</label>
+</div>
 <table class="table table-bordered table-striped">
+	
 	<tbody>
-			
 			@foreach (var product in Model)
 			{
 			<tr>
@@ -17,7 +29,7 @@
 						@product.Description
 				</td>
 				<td>
-					
+						@product.CategoryId
 				</td>
 				<td>
 					<div>
@@ -39,10 +51,11 @@
 			</tr>
 			}
 	</tbody>
-	<a asp-action="Upsert" class="btn btn-primary">
-		Create Product
-	</a>
+	
 </table>
+<a asp-action="Upsert" class="btn btn-primary">
+	Create Product
+</a>
 
 
 
