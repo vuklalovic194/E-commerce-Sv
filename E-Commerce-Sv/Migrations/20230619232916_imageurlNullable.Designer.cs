@@ -4,6 +4,7 @@ using E_Commerce_Sv.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce_Sv.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230619232916_imageurlNullable")]
+    partial class imageurlNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,21 +50,21 @@ namespace E_Commerce_Sv.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 4,
+                            Id = 1,
                             Description = "Graphic Cards that will suit ur needs in every aspect!",
-                            Name = "GRAPHIC CARDS"
+                            Name = "Graphic Cards"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 2,
                             Description = "Best of gaming desktops on market",
-                            Name = "GAMING DESCTOPS"
+                            Name = "Gaming Desktops"
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 3,
                             Description = "The fastest laptops on market",
-                            Name = "LAPTOPS"
+                            Name = "Laptops"
                         });
                 });
 

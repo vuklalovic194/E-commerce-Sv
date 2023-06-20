@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Views\ShoppingCart\" />
     <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
 
 </Project>

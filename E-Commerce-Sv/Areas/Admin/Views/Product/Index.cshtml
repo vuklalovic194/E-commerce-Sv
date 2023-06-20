@@ -2,8 +2,8 @@
 
 <h1>PRODUCTS</h1>
 <table class="table table-bordered table-striped">
-	<thead>
-		<tbody>
+	<tbody>
+			
 			@foreach (var product in Model)
 			{
 			<tr>
@@ -17,8 +17,14 @@
 						@product.Description
 				</td>
 				<td>
+					
+				</td>
+				<td>
 					<div>
-						<a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-primary mx-2">
+						
+					</div>
+					<div>
+						<a asp-controller="Product" asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary mx-2">
 							Edit
 						</a>
 					</div>
@@ -32,12 +38,12 @@
 				</td>
 			</tr>
 			}
-		</tbody>
-	</thead>
+	</tbody>
+	<a asp-action="Upsert" class="btn btn-primary">
+		Create Product
+	</a>
 </table>
 
-<a asp-action="Create" class="btn btn-primary">
-	Create Product
-</a>
+
 
 
