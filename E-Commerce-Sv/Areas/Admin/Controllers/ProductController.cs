@@ -57,19 +57,36 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 			if (ModelState.IsValid)
 			{
 				string wwwRootPath = _webHostEnvironment.WebRootPath;
-				if (file == null)
+				if (file != null)
 				{
 					string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-					string productPath = Path.Combine(wwwRootPath, @"\images\product");
+					string productPath = Path.Combine(wwwRootPath, @"images\product");
 
-					using (var fileStream = new FileStream(Path.Combine(fileName, productPath), FileMode.Create))
+					if (!string.IsNullOrEmpty(obj.Product.ImageUrl))
+					{
+						var oldImagetPath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
+						if (System.IO.File.Exists(oldImagetPath))
+						{
+							System.IO.File.Delete(oldImagetPath);
+						}
+					}
+
+					using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
 					{
 						file.CopyTo(fileStream);
 					}
-
-					obj.Product.ImageUrl = @"\images\product" + fileName;
+					
+					obj.Product.ImageUrl = @"\images\product\" + fileName;
 				}
-				_unitOfWork.ProductRepository.Add(obj.Product);
+				if (obj.Product.Id == 0)
+				{
+					_unitOfWork.ProductRepository.Add(obj.Product);
+				}
+				else
+				{
+					_unitOfWork.ProductRepository.Update(obj.Product);
+				}
+				
 				_unitOfWork.Save();
 				return RedirectToAction("Index");
 			}
