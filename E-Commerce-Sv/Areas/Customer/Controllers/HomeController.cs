@@ -23,6 +23,17 @@ namespace E_Commerce_Sv.Areas.Customer.Controllers
             return View(productList);
         }
 
+        public IActionResult Details(int productId)
+        {
+            if (productId != 0) 
+            {
+                Product product = _unitOfWork.ProductRepository.Get(u => u.Id == productId);
+				return View(product);
+			}
+            return RedirectToAction(nameof(Index));
+            
+        }
+
         public IActionResult Privacy()
         {
             return View();

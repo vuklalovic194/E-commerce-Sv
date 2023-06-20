@@ -13,7 +13,7 @@
 								<p class="card-title h5 text-black opacity-75 text-uppercase text-center">@product.Name</p>
 								<p class="cardcard-title text-warning text-center">@product.Price.ToString("c")</p>
 								<div>
-									<a href="#" class="btn btnalert-primary bg-black border-0 form-control">
+									<a asp-action="Details" asp-route-productId="@product.Id" class="btn btnalert-primary bg-black border-0 form-control">
 										Details
 									</a>
 								</div>

@@ -16,7 +16,7 @@ namespace E_Commerce_Sv
 
         public void Update(ShoppingCart shoppingCart)
         {
-            _db.Update(shoppingCart);
+            _db.ShoppingCarts.Update(shoppingCart);
         }
     }
 }
