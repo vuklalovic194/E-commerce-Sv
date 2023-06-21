@@ -1,12 +1,13 @@
-﻿@model Product
+﻿@model ShoppingCart
 
 <form method="post">
+    <input hidden asp-for="ProductId"/>
     <div class="card shadow border-0 mt-4">
         <div class="card-header bg-secondary bg-gradient text-light py-4">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">@Model.Name</h3>
-                    <p class="text-white-50 fw-semibold mb-0">@Model.Description</p>
+                    <h3 class="text-white text-uppercase">@Model.Product.Name</h3>
+                    <p class="text-white-50 fw-semibold mb-0">@Model.Product.Description</p>
                 </div>
             </div>
         </div>
@@ -21,17 +22,17 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
-                        <img src="@Model.ImageUrl" width="30%" class="rounded" />
+                        <img src="@Model.Product.ImageUrl" width="30%" class="rounded" />
                     </div>
                     <div class="col-12 col-lg-6 offset-lg-1">
                         <div class="col-12 col-md-6 pb-4">
-                            <span class="badge">Category ID: @Model.CategoryId</span>
+                            <span class="badge">Category ID: @Model.Product.CategoryId</span>
                         </div>
                         <div class="row ps-2">
                             <h3 class="text-dark text-opacity-75  pb-2">
                                 Price:
                                 <span class="text-decoration-line-through">
-                                    @Model.Price.ToString("c")
+                                    @Model.Product.Price.ToString("c")
                                 </span>
                             </h3>
                         </div>
@@ -42,17 +43,16 @@
                                           id="inputGroup-sizing-default">
                                         Count
                                     </span>
-                                    <input type="number" value="1" class="form-control text-end"
+                                    <input asp-for="Count" type="number" value="1" class="form-control text-end"
                                            aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" disabled
+                                <button type="submit" 
                                         class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
-                                    Add to Cart (Comming Soon...)
+                                    Add to Cart 
                                 </button>
                             </div>
                         </div>
