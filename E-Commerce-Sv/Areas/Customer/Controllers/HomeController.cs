@@ -27,44 +27,49 @@ namespace E_Commerce_Sv.Areas.Customer.Controllers
 
         public IActionResult Details(int productId)
         {
-                ShoppingCart cart = new()
-                {
-                    Product = _unitOfWork.ProductRepository.Get(u => u.Id == productId),
-                    Count = 1,
-                    ProductId = productId
-			    };
-			return View(cart);
+            ShoppingCart cart = new()
+            {
+                Product = _unitOfWork.ProductRepository.Get(u => u.Id == productId),
+                Count = 1,
+                ProductId = productId
+            };
+            return View(cart);
         }
+
+
 
         [HttpPost]
         [Authorize]
-		public IActionResult Details(ShoppingCart shoppingCart)
-		{
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-			shoppingCart.ApplicationUserId=userId;
+            shoppingCart.ApplicationUserId = userId;
 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepository.
                 Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
-            
+
             if (cartFromDb != null)
             {
                 //update
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
             }
+            else if(shoppingCart.Count < 0)
+            {
+                shoppingCart.Count = 0;
+            }
             else
             {
-				//create
-				_unitOfWork.ShoppingCartRepository.Add(shoppingCart);
-			}
-            TempData["success"] = "Cart Updated Succesfully";
-			_unitOfWork.Save();
-           
+                //create
+                _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+            }
+            _unitOfWork.Save();
+            
             return RedirectToAction(nameof(Index));
-		}
+        }
 
-		public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }

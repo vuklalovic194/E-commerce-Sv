@@ -21,19 +21,37 @@ namespace E_Commerce_Sv.Repository
 			dbSet.Add(entity);
 		}
 
-		public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includeProperties = null)
+		public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
 		{
-			IQueryable<T> query = dbSet;
-			query = query.Where(filter);
+			IQueryable<T> query;
+            if (tracked)
+            {
+				query = dbSet;
+                query = query.Where(filter);
+                if (!string.IsNullOrEmpty(includeProperties))
+                {
+                    foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(includeProp);
+                    }
+                }
 
-			if (!string.IsNullOrEmpty(includeProperties))
+                return query.FirstOrDefault();
+            }
+			else
 			{
-				foreach(var includeProp in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries)) { 
-				query = query.Include(includeProp);
-				}
-			}
+				query = dbSet.AsNoTracking();
+                query = query.Where(filter);
+                if (!string.IsNullOrEmpty(includeProperties))
+                {
+                    foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        query = query.Include(includeProp);
+                    }
+                }
 
-			return query.FirstOrDefault();
+                return query.FirstOrDefault();
+            }
 		}
 
 		public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null)
