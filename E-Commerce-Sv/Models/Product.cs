@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_Commerce_Sv.Models
@@ -16,7 +17,10 @@ namespace E_Commerce_Sv.Models
 		[StringLength(50, MinimumLength = 3, ErrorMessage = "Name must consider from 3 - 50 characters")]
 		public string? Description { get; set; }
 		[ForeignKey("CategoryId")]
+		[ValidateNever]
 		public Category? Category { get; set; }
 		public int CategoryId { get; set; }
+		[ValidateNever]
+		public string? ImageUrl { get; set; }
 	}
 }

@@ -14,6 +14,7 @@
 <body>
     <header>
         <nav class="navbar__container">
+            
             <div class="navbar__items__container">
                 <div class="navbar__items">
                     <div class="navbar__logo">
@@ -27,8 +28,27 @@
                         <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Shop</a>
                         <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Blog</a>
-                        <a class="nav__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">About us</a>
+                        <a class="nav__link" asp-area="Customer" asp-action="about" asp-controller="Home" asp-action="Index">About us</a>
                     </div>
+                    <ul>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Management
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Admin" asp-area="" asp-controller="Product" asp-action="Index">Products</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="Admin" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
                 </div>
                 <div class="navbar__buttons">
                     <div class="navbar__button">
@@ -37,7 +57,7 @@
                     </div>
                     <div class="navbar__button">
                         <img src="~/assets/add shopping-bag.svg" />
-                        <a class="button__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Cart</a>
+                        <a class="button__link" asp-area="Customer"  asp-controller="Cart" asp-action="Index">Cart</a>
                     </div>
                 </div>
             </div>

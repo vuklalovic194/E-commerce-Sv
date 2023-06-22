@@ -10,15 +10,15 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 	[Authorize(Roles = SD.Role_Admin)]
 	public class CategoryController : Controller
 	{
-		private readonly ICategoryRepository _categoryRepo;
-        public CategoryController(ICategoryRepository db)
+		private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork db)
         {
-            _categoryRepo = db;
+            _unitOfWork = db;
         }
 
         public IActionResult Index()
 		{
-			List<Category> category = _categoryRepo.GetAll().ToList();
+			List<Category> category = _unitOfWork.CategoryRepository.GetAll().ToList();
 			return View(category);
 		}
 
@@ -32,8 +32,8 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_categoryRepo.Add(category);
-				_categoryRepo.Save();
+				_unitOfWork.CategoryRepository.Add(category);
+				_unitOfWork.Save();
 				return RedirectToAction("Index");
 			}
 			return View();
@@ -45,7 +45,7 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 			{
 				return NotFound();
 			}
-			Category? categoryFromDb = _categoryRepo.Get(c => c.Id == id);
+			Category? categoryFromDb = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
 			if(categoryFromDb == null)
 			{
 				return NotFound();
@@ -58,8 +58,8 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_categoryRepo.Update(category);
-				_categoryRepo.Save();
+				_unitOfWork.CategoryRepository.Update(category);
+				_unitOfWork.Save();
 				return RedirectToAction("Index");
 			}
 			return View();
@@ -71,7 +71,7 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 			{
 				return NotFound();
 			}
-			Category? categoryFromDb = _categoryRepo.Get(c => c.Id==id);
+			Category? categoryFromDb = _unitOfWork.CategoryRepository.Get(c => c.Id == id);
 
 			if (categoryFromDb == null)
 			{
@@ -83,8 +83,8 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 		[HttpPost]
 		public IActionResult Delete(Category category) 
 		{
-			_categoryRepo.Remove(category);
-			_categoryRepo.Save();
+			_unitOfWork.CategoryRepository.Remove(category);
+			_unitOfWork.Save();
 			return RedirectToAction("Index");
 		}
 	}
