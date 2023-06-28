@@ -104,6 +104,19 @@ namespace E_Commerce_Sv.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
+            [Required]
+            public string Name { get; set; }
+
+            public string Phone { get; set; }
+
+            public string StreetAddress { get; set; }
+
+            public string City { get; set; }
+
+            public string State{ get; set; }
+
+            public string PostalCode { get; set; }
+
             public string? Role { get; set; }
             public IEnumerable<SelectListItem>RoleList { get; set; }
         }
@@ -143,6 +156,12 @@ namespace E_Commerce_Sv.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                user.Name = Input.Name;
+                user.PhoneNumber = Input.Phone;
+                user.StreetAddress = Input.StreetAddress;
+                user.City = Input.City;
+                user.PostalCode = Input.PostalCode;
+                user.State = Input.State;
 
                 if (result.Succeeded)
                 {

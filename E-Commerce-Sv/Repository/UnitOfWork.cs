@@ -13,13 +13,19 @@ namespace E_Commerce_Sv.Repository
 		public IShoppingCartRepository ShoppingCartRepository { get; private set; }
 
 		public IApplicationUserRepository ApplicationUserRepository { get; private set; }
-		public UnitOfWork(ApplicationDbContext db)
+
+		public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
+
+		public IOrderDetailRepository OrderDetailRepository { get; private set; }
+        public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
 			CategoryRepository = new CategoryRepository(_db);
 			ProductRepository = new ProductRepository(_db);
 			ShoppingCartRepository = new ShoppingCartRepository(_db);
 			ApplicationUserRepository = new ApplicationUserRepository(_db);
+			OrderHeaderRepository = new OrderHeaderRepository(_db);
+			OrderDetailRepository = new OrderDetailRepository(_db);
 
         }
 
