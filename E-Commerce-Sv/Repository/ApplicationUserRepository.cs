@@ -6,8 +6,8 @@ namespace E_Commerce_Sv.Repository
 {
 	public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 	{
-		private readonly ApplicationDbContext _db;
-		public ApplicationUserRepository(ApplicationDbContext db) : base(db)
+        private ApplicationDbContext _db;
+        public ApplicationUserRepository(ApplicationDbContext db) : base(db)
 		{
 			_db = db;
 		}
