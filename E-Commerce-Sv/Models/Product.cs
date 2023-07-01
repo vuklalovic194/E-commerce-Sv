@@ -14,7 +14,7 @@ namespace E_Commerce_Sv.Models
 		[Required]
 		public int Price { get; set; }
 		[Required]
-		[StringLength(50, MinimumLength = 3, ErrorMessage = "Name must consider from 3 - 50 characters")]
+		[StringLength(500, MinimumLength = 3, ErrorMessage = "Name must consider from 3 - 500 characters")]
 		public string? Description { get; set; }
 		[ForeignKey("CategoryId")]
 		[ValidateNever]
@@ -22,5 +22,6 @@ namespace E_Commerce_Sv.Models
 		public int CategoryId { get; set; }
 		[ValidateNever]
 		public string? ImageUrl { get; set; }
+
 	}
 }

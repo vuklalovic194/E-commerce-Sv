@@ -6,6 +6,7 @@ using E_Commerce_Sv.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 
 namespace E_Commerce_Sv.Areas.Admin.Controllers
 {
@@ -23,7 +24,8 @@ namespace E_Commerce_Sv.Areas.Admin.Controllers
 
 		public IActionResult Index()
 		{
-			List<Product> products = _unitOfWork.ProductRepository.GetAll().ToList();
+			List<Product> products = _unitOfWork.ProductRepository.GetAll(includeProperties: "Category").ToList();
+			
 			//var products = _db.Products.ToList();
 			return View(products);
 		}

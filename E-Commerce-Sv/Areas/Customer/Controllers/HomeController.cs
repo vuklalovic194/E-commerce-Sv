@@ -1,4 +1,5 @@
 ﻿using E_Commerce_Sv.Models;
+using E_Commerce_Sv.Models.ViewModels;
 using E_Commerce_Sv.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +20,56 @@ namespace E_Commerce_Sv.Areas.Customer.Controllers
             _logger = logger;
         }
 
+        
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll().ToList();
             return View(productList);
         }
 
+        [Authorize]
+        public IActionResult Love(Wishlist wishlist)
+        {
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+			wishlist.ApplicationUserId = userId;
+
+
+            WishlistVM wishlistVM = new()
+            {
+                WishList = _unitOfWork.WishlistRepository.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product").ToList(),
+                Products = new Product()
+            };
+
+			return View(wishlistVM);
+        }
+
+
+        //WISHLIST POST
+        [Authorize]
+        public IActionResult LovePOST(Wishlist wishlist, int productId)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            wishlist.ApplicationUserId = userId;
+
+            Wishlist wishlistFromDb = _unitOfWork.WishlistRepository.Get(u => u.ApplicationUserId==userId);
+            if(wishlistFromDb != null)
+            {
+                
+				_unitOfWork.WishlistRepository.Update(wishlist);
+			}
+			else
+            {
+				_unitOfWork.WishlistRepository.Add(wishlist);
+            }
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        //DETAILS GET
         public IActionResult Details(int productId)
         {
             ShoppingCart cart = new()
@@ -37,7 +82,7 @@ namespace E_Commerce_Sv.Areas.Customer.Controllers
         }
 
 
-
+        //DETAILS POST 
         [HttpPost]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)

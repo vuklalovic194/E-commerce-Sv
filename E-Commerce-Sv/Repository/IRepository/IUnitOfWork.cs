@@ -8,6 +8,7 @@
 		IApplicationUserRepository ApplicationUserRepository { get; }
 		IOrderHeaderRepository OrderHeaderRepository { get; }
 		IOrderDetailRepository OrderDetailRepository { get; }
+		IWishlistRepository WishlistRepository { get; }
 
         void Save();
 	}

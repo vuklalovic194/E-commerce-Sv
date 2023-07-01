@@ -17,6 +17,8 @@ namespace E_Commerce_Sv.Repository
 		public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
 
 		public IOrderDetailRepository OrderDetailRepository { get; private set; }
+
+		public IWishlistRepository WishlistRepository { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -26,6 +28,7 @@ namespace E_Commerce_Sv.Repository
 			ApplicationUserRepository = new ApplicationUserRepository(_db);
 			OrderHeaderRepository = new OrderHeaderRepository(_db);
 			OrderDetailRepository = new OrderDetailRepository(_db);
+			WishlistRepository = new WishlistRepository(_db);
 
         }
 

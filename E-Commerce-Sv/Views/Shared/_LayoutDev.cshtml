@@ -18,7 +18,8 @@
             <div class="navbar__items__container">
                 <div class="navbar__items">
                     <div class="navbar__logo">
-                        <img src="~/assets/Logo.svg" alt="logo" />
+                        <a class="nav__link" asp-action="Index" asp-controller="Home" asp-area="Customer"><img src="~/assets/Logo.svg" alt="logo" /></a>
+                        
                     </div>
                     <div class="navbar__search">
                         <input type="text" accept="string" alt="search" placeholder="Search something" />
@@ -53,7 +54,7 @@
                 <div class="navbar__buttons">
                     <div class="navbar__button">
                         <img src="~/assets/heart.svg" />
-                        <a class="button__link" asp-area="Customer" asp-area="" asp-controller="Home" asp-action="Index">Love</a>
+                        <a class="button__link"  asp-area="Customer" asp-action="Love" asp-controller="Home" >Love</a>
                     </div>
                     <div class="navbar__button">
                         <img src="~/assets/add shopping-bag.svg" />
