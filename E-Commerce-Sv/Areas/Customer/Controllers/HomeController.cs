@@ -68,6 +68,24 @@ namespace E_Commerce_Sv.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //Remove from wishlist
+        [Authorize]
+        public IActionResult RemoveLove(Wishlist wishlist, int productId)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            wishlist.ApplicationUserId=userId;
+
+            var wishlistFromDb = _unitOfWork.WishlistRepository.Get(u=>u.ApplicationUserId==userId);
+            if (wishlistFromDb != null)
+            {
+                _unitOfWork.WishlistRepository.Remove(wishlistFromDb);
+                _unitOfWork.Save();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
         //DETAILS GET
         public IActionResult Details(int productId)

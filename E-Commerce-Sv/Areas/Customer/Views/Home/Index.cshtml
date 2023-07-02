@@ -16,8 +16,15 @@
 									<a asp-action="Details" asp-route-productId="@product.Id" class="btn btnalert-primary bg-black border-0 form-control">
 										Details
 									</a>
+								</div>
+								<div>
 									<a asp-action="LovePOST" asp-route-productId="@product.Id" class="btn btnalert-primary bg-black border-0 form-control">
 										Add to Wishlist
+									</a>
+								</div>
+								<div>
+									<a asp-action="RemoveLove" asp-route-productId="@product.Id" class="btn btnalert-primary bg-black border-0 form-control">
+										Remove From Wishlist
 									</a>
 								</div>
 							</div>

@@ -11,6 +11,19 @@
 			<div class="d-none d-lg-block col-lg-1 text-center py-2">
 				<img src="@item.Product.ImageUrl" class="rounded" width="20%" />
 			</div>
+			<div class="col-12 col-lg-6 pt-md-3">
+				<p><small>@item.Product.Price.ToString("c")</small></p>
+			</div>
+			<div>
+				<a asp-action="RemoveLove" asp-route-productId="@item.Product.Id" class="btn btnalert-primary bg-black border-0 form-control">
+					Remove From Wishlist
+				</a>
+			</div>
+			<div>
+				<a asp-action="Details" asp-route-productId="@item.Product.Id" class="btn btnalert-primary bg-black border-0 form-control">
+					Details
+				</a>
+			</div>
 		}
 	</div>
 </div>
