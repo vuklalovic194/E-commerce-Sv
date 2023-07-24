@@ -24,7 +24,7 @@
 			</div>
 			@foreach (var com in Model.Comments)
 			{
-				<h3>@com.ApplicationUser.UserName  </h3> <h5>@com.CreatedAt</h5>
+				<h3>@com.ApplicationUser.UserName </h3> <h5>@com.CreatedAt</h5>
 				<label class="text-start text-black" style="text-decoration-line:underline">@com.Title</label>
 				<p>@com.Content</p>
 				<br />

@@ -130,7 +130,7 @@ namespace E_Commerce_Sv.Areas.Customer.Controllers
 				cartFromDb.Count += shoppingCart.Count;
 				_unitOfWork.ShoppingCartRepository.Update(cartFromDb);
 			}
-			else if (shoppingCart.Count < 0)
+			else if (shoppingCart.Count <= 0)
 			{
 				shoppingCart.Count = 0;
 			}
