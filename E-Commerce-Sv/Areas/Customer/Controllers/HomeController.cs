@@ -5,142 +5,184 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Microsoft.Build.Framework;
 
 namespace E_Commerce_Sv.Areas.Customer.Controllers
 {
-    [Area("Customer")]
-    public class HomeController : Controller
-    {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<HomeController> _logger;
+	[Area("Customer")]
+	public class HomeController : Controller
+	{
+		private readonly IUnitOfWork _unitOfWork;
+		private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-            _logger = logger;
-        }
+		public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+		{
+			_unitOfWork = unitOfWork;
+			_logger = logger;
+		}
 
-        
-        public IActionResult Index()
-        {
-            IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll().ToList();
-            return View(productList);
-        }
 
-        [Authorize]
-        public IActionResult Love(Wishlist wishlist)
-        {
+		public IActionResult Index(string searchString)
+		{
+			var products = _unitOfWork.ProductRepository.GetAll();
+
+			var prodFromDb = from m in products select m;
+			if (!string.IsNullOrEmpty(searchString))
+			{
+				prodFromDb = _unitOfWork.ProductRepository.GetAll(m => m.Name.Contains(searchString));
+				return View(prodFromDb);
+			}
+
+			IEnumerable<Product> productList = _unitOfWork.ProductRepository.GetAll().ToList();
+			return View(productList);
+		}
+
+		[Authorize]
+		public IActionResult Love(Wishlist wishlist)
+		{
 			var claimsIdentity = (ClaimsIdentity)User.Identity;
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 			wishlist.ApplicationUserId = userId;
 
 
-            WishlistVM wishlistVM = new()
-            {
-                WishList = _unitOfWork.WishlistRepository.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product").ToList(),
-                Products = new Product()
-            };
+			WishlistVM wishlistVM = new()
+			{
+				WishList = _unitOfWork.WishlistRepository.GetAll(u => u.ApplicationUserId == userId, includeProperties: "Product").ToList(),
+				Products = new Product()
+			};
 
 			return View(wishlistVM);
-        }
+		}
 
 
-        //WISHLIST POST
-        [Authorize]
-        public IActionResult LovePOST(Wishlist wishlist, int productId)
-        {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            wishlist.ApplicationUserId = userId;
+		//WISHLIST POST
+		[Authorize]
+		public IActionResult LovePOST(Wishlist wishlist, int productId)
+		{
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+			wishlist.ApplicationUserId = userId;
 
-            Wishlist wishlistFromDb = _unitOfWork.WishlistRepository.Get(u => u.ApplicationUserId==userId);
-            if(wishlistFromDb != null)
-            {
-                
+			Wishlist wishlistFromDb = _unitOfWork.WishlistRepository.Get(u => u.ApplicationUserId == userId);
+			if (wishlistFromDb != null)
+			{
+
 				_unitOfWork.WishlistRepository.Update(wishlist);
 			}
 			else
-            {
+			{
 				_unitOfWork.WishlistRepository.Add(wishlist);
-            }
-            _unitOfWork.Save();
+			}
+			_unitOfWork.Save();
 
-            return RedirectToAction(nameof(Index));
-        }
+			return RedirectToAction(nameof(Index));
+		}
 
-        //Remove from wishlist
-        [Authorize]
-        public IActionResult RemoveLove(Wishlist wishlist, int productId)
-        {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+		//Remove from wishlist
+		[Authorize]
+		public IActionResult RemoveLove(Wishlist wishlist, int productId)
+		{
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            wishlist.ApplicationUserId=userId;
+			wishlist.ApplicationUserId = userId;
 
-            var wishlistFromDb = _unitOfWork.WishlistRepository.Get(u=>u.ApplicationUserId==userId);
-            if (wishlistFromDb != null)
-            {
-                _unitOfWork.WishlistRepository.Remove(wishlistFromDb);
-                _unitOfWork.Save();
-            }
+			var wishlistFromDb = _unitOfWork.WishlistRepository.Get(u => u.ApplicationUserId == userId);
+			if (wishlistFromDb != null)
+			{
+				_unitOfWork.WishlistRepository.Remove(wishlistFromDb);
+				_unitOfWork.Save();
+			}
 
-            return RedirectToAction(nameof(Index));
-        }
+			return RedirectToAction(nameof(Index));
+		}
 
-        //DETAILS GET
-        public IActionResult Details(int productId)
-        {
-            ShoppingCart cart = new()
-            {
-                Product = _unitOfWork.ProductRepository.Get(u => u.Id == productId),
-                Count = 1,
-                ProductId = productId
-            };
-            return View(cart);
-        }
+		//DETAILS GET
+		public IActionResult Details(int productId)
+		{
+			ShoppingCart cart = new()
+			{
+				Product = _unitOfWork.ProductRepository.Get(u => u.Id == productId),
+				Count = 1,
+				ProductId = productId
+			};
+			return View(cart);
+		}
 
 
-        //DETAILS POST 
-        [HttpPost]
-        [Authorize]
-        public IActionResult Details(ShoppingCart shoppingCart)
-        {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            shoppingCart.ApplicationUserId = userId;
+		//DETAILS POST 
+		[HttpPost]
+		[Authorize]
+		public IActionResult Details(ShoppingCart shoppingCart)
+		{
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+			shoppingCart.ApplicationUserId = userId;
 
-            ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepository.
-                Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
+			ShoppingCart cartFromDb = _unitOfWork.ShoppingCartRepository.
+				Get(u => u.ApplicationUserId == userId && u.ProductId == shoppingCart.ProductId);
 
-            if (cartFromDb != null)
-            {
-                //update
-                cartFromDb.Count += shoppingCart.Count;
-                _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
-            }
-            else if(shoppingCart.Count < 0)
-            {
-                shoppingCart.Count = 0;
-            }
-            else
-            {
-                //create
-                _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
-            }
-            _unitOfWork.Save();
-            
-            return RedirectToAction(nameof(Index));
-        }
+			if (cartFromDb != null)
+			{
+				//update
+				cartFromDb.Count += shoppingCart.Count;
+				_unitOfWork.ShoppingCartRepository.Update(cartFromDb);
+			}
+			else if (shoppingCart.Count < 0)
+			{
+				shoppingCart.Count = 0;
+			}
+			else
+			{
+				//create
+				_unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+			}
+			_unitOfWork.Save();
 
-        public IActionResult About()
-        {
-            return View();
-        }
+			return RedirectToAction(nameof(Index));
+		}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		public IActionResult About()
+		{
+			return View();
+		}
+
+		public IActionResult Blog(int id)
+		{
+			CommentVM commentVM = new()
+			{
+				Comments = _unitOfWork.CommentRepository.GetAll(includeProperties: "ApplicationUser").ToList(),
+				Comment = new Comment()
+			};
+			return View(commentVM);
+		}
+
+		//public IActionResult CreateComment(Comment comment)
+		//{
+		//          return View();
+		//}
+
+		[Authorize]
+		[HttpPost]
+		[ActionName(nameof(Blog))]
+		public IActionResult CreateComment(Comment comment, int id)
+		{
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+			comment.ApplicationUserId = userId;
+			_unitOfWork.CommentRepository.Add(comment);
+			_unitOfWork.Save();
+
+			return RedirectToAction(nameof(Blog));
+		}
+
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+	}
 }

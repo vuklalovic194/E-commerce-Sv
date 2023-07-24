@@ -6,19 +6,16 @@ namespace E_Commerce_Sv.Repository
 	public class UnitOfWork : IUnitOfWork
 	{
 		private ApplicationDbContext _db;
+
 		public ICategoryRepository CategoryRepository { get; private set; }
-
 		public IProductRepository ProductRepository { get; private set; }
-
 		public IShoppingCartRepository ShoppingCartRepository { get; private set; }
-
 		public IApplicationUserRepository ApplicationUserRepository { get; private set; }
-
 		public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
-
 		public IOrderDetailRepository OrderDetailRepository { get; private set; }
-
 		public IWishlistRepository WishlistRepository { get; private set; }
+		public ICommentRepository CommentRepository { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -29,6 +26,7 @@ namespace E_Commerce_Sv.Repository
 			OrderHeaderRepository = new OrderHeaderRepository(_db);
 			OrderDetailRepository = new OrderDetailRepository(_db);
 			WishlistRepository = new WishlistRepository(_db);
+			CommentRepository = new CommentRepository(_db);
 
         }
 

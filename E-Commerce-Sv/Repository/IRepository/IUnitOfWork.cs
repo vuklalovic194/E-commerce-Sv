@@ -9,6 +9,7 @@
 		IOrderHeaderRepository OrderHeaderRepository { get; }
 		IOrderDetailRepository OrderDetailRepository { get; }
 		IWishlistRepository WishlistRepository { get; }
+		ICommentRepository CommentRepository { get; }
 
         void Save();
 	}

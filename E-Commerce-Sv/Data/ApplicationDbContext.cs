@@ -18,6 +18,7 @@ namespace E_Commerce_Sv.Data
 		public DbSet<OrderHeader> OrderHeaders { get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
 		public DbSet<Wishlist> Wishlists { get; set; }
+		public DbSet<Comment> Comments { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

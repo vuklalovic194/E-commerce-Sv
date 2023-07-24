@@ -1,0 +1,34 @@
+﻿@model CommentVM
+
+<div class="row">
+	<div class="col-12">
+		<h1>Blog in making</h1>
+	</div>
+	<div class="col-5">
+		<div class="col-10">
+			<h2>------COMMENT SECTION------</h2>
+			
+			<div class="mb-3 row p-1">
+				<form method="post"  asp-controller="Home" asp-action="blog" asp-route-id="@Model.Comment.Id" >
+					<input asp-for="Comment.Id" hidden />
+					<label>Enter a title</label>
+					<br />
+					<input asp-for="@Model.Comment.Title"  />
+					<br />
+					<label class="p-0">Leave a comment</label>
+					<br />
+					<textarea asp-for="@Model.Comment.Content" class="form-control"> </textarea>
+					<br />
+					<input type="submit" value="Submit" />
+				</form>
+			</div>
+			@foreach (var com in Model.Comments)
+			{
+				<h3>@com.ApplicationUser.UserName  </h3> <h5>@com.CreatedAt</h5>
+				<label class="text-start text-black" style="text-decoration-line:underline">@com.Title</label>
+				<p>@com.Content</p>
+				<br />
+			}
+		</div>
+	</div>
+</div>
