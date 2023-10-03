@@ -21,20 +21,20 @@ Developed E-commerce site as backend. No frontend applied on this project.
 
 - **Payment System**: Integrated Stripe API for online payment processing, enhancing the platform's usability for online shopping.
 
-#How to start application
-- **Clone the repository
+## How to start application
+- **Clone the repository**
 git clone https://github.com/vuklalovic194/E-commerce-Sv.git
 
-- **Navigate to the project directory
+- **Navigate to the project directory**
 cd your-repo
 
-- **Install dependencies (if applicable)
+- **Install dependencies (if applicable)**
 npm install
 
-- **Configure environment variables
+- **Configure environment variables**
 cp .env.example .env
 
-- **Run the application
+- **Run the application**
 dotnet run
 
 
